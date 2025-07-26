@@ -1,6 +1,7 @@
 package projects.model;
 
 
+import projects.interfaces.Manageable;
 import java.util.Objects;
 
 public abstract class Person implements Manageable {
