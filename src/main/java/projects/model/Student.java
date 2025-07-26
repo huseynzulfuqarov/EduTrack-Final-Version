@@ -2,7 +2,6 @@ package projects.model;
 
 import projects.interfaces.Notifiable;
 import projects.interfaces.Reportable;
-
 import java.util.Arrays;
 import java.util.Objects;
 

@@ -1,6 +1,5 @@
 package projects.model;
 
-
 import projects.interfaces.Manageable;
 import java.util.Objects;
 
