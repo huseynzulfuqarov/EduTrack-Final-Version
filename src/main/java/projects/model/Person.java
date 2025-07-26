@@ -1,4 +1,4 @@
-package projects.super_class;
+package projects.model;
 
 
 import java.util.Objects;
