@@ -4,20 +4,22 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Course {
-    private final int MAX_STUDENT_COUNT = 10;
+    private static int MAX_COURSE_COUNT=10;
     private static int nextId = 0;
     private int id;
     private String name;
     private String category;
     private Teacher teacher;
-    private Student[] students = new Student[MAX_STUDENT_COUNT];
-    private int studentCount = 0;
+    private Student[] students;
+    private int studentCount;
 
     public Course(String name, String category, Teacher teacher) {
         this.id = nextId++;
         this.name = name;
         this.category = category;
         this.teacher = teacher;
+        this.students = null;
+        this.studentCount = 0;
     }
 
     public int getId() {
@@ -69,27 +71,20 @@ public class Course {
     }
 
     public void addStudent(Student student) {
-        if (studentCount < MAX_STUDENT_COUNT) {
-            students[studentCount] = student;
-            studentCount++;
-        } else {
-            System.out.println("No enough space in the system");
+        if (student == null) {
+            System.out.println("Value can't be null.");
+            return;
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return id == course.id && studentCount == course.studentCount && Objects.equals(name, course.name) && Objects.equals(category, course.category) && Objects.equals(teacher, course.teacher) && Objects.deepEquals(students, course.students);
-    }
-
-    public void removeStudent(int index) {
-        for (int i = index; i < studentCount - 1; i++) {
-            students[i] = students[i + 1];
+        if(studentCount == MAX_COURSE_COUNT){
+            System.out.println("You have maximum student count.");
+            return;
         }
-        students[studentCount - 1] = null;
-        studentCount--;
+        Student[] temp = new Student[++studentCount];
+        for (int i = 0; i < studentCount -1; i++) {
+            temp[i] = students[i];
+        }
+        temp[studentCount - 1] = student;
+        students = temp;
     }
 
     public int findStudentIndex(int id) {
@@ -101,20 +96,42 @@ public class Course {
         return -1;
     }
 
+    public void removeStudent(int index) {
+        if (index < 0 || index > studentCount - 1) {
+            System.out.println("Not found given index");
+            return;
+        }
+        Student[] temp = new Student[studentCount-1];
+        int count = 0;
+        for (int i = 0; i < studentCount; i++) {
+            if (i != index) {
+                temp[count++] = students[i];
+            }
+        }
+        studentCount--;
+        students = temp;
+    }
+
     public void printCourseInfo() {
         System.out.println("Name: " + name + " Teacher" + teacher.getName() + " Student Count: " + studentCount);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(name, course.name) && Objects.equals(category, course.category);
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(MAX_STUDENT_COUNT, id, name, category, teacher, Arrays.hashCode(students), studentCount);
+        return Objects.hash(id, name, category, teacher, Arrays.hashCode(students), studentCount);
     }
 
     @Override
     public String toString() {
         return "Course -> " +
-                " | MAX_STUDENT_COUNT: " + MAX_STUDENT_COUNT +
+                " | MAX_STUDENT_COUNT: " +
                 " | ID: " + id +
                 " | Name: " + name +
                 " | Category: " + category +
