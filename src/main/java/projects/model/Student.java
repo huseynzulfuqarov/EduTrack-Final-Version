@@ -96,6 +96,7 @@ public class Student extends Person implements Notifiable, Reportable {
     @Override
     public String toString() {
         return "Student -> " + super.toString() +
+                " | MAX_COURSE_COUNT:  " + MAX_COURSE_COUNT +
                 " | Courses: " + Arrays.toString(courses) +
                 " | CourseCount: " + courseCount;
     }
