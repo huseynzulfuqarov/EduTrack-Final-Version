@@ -52,9 +52,7 @@ public abstract class Person implements Manageable {
         this.IQ = IQ;
     }
 
-
     abstract void printInfo();
-
 
     @Override
     public void sendNotification(String message) {
@@ -65,7 +63,6 @@ public abstract class Person implements Manageable {
     public String generateReport() {
         return "Person is person";
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -81,11 +78,10 @@ public abstract class Person implements Manageable {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", IQ=" + IQ +
-                '}';
+        return "Person ->" +
+                " | ID: " + id +
+                " | Name: " + name +
+                " | Email: " + email +
+                " | IQ: " + IQ;
     }
 }

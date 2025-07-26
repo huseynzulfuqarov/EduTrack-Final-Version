@@ -2,11 +2,12 @@ package projects.model;
 
 import projects.interfaces.Notifiable;
 import projects.interfaces.Reportable;
+
 import java.util.Arrays;
 import java.util.Objects;
 
 public class Student extends Person implements Notifiable, Reportable {
-    private static int MAX_COURSE_COUNT=5;
+    private static int MAX_COURSE_COUNT = 5;
     private Course[] courses;
     private int courseCount;
 
@@ -37,13 +38,13 @@ public class Student extends Person implements Notifiable, Reportable {
             System.out.println("Value can't be null.");
             return;
         }
-        if(courseCount == MAX_COURSE_COUNT){
+        if (courseCount == MAX_COURSE_COUNT) {
             System.out.println("You have maximum course count.");
             return;
         }
         Course[] temp = new Course[++courseCount];
-        for (int i = 0; i < courseCount -1; i++) {
-                temp[i] = courses[i];
+        for (int i = 0; i < courseCount - 1; i++) {
+            temp[i] = courses[i];
         }
         temp[courseCount - 1] = course;
         courses = temp;
@@ -95,7 +96,7 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public String toString() {
-        return "Student -> " + super.toString() +
+        return "Student ->" + super.toString() +
                 " | MAX_COURSE_COUNT:  " + MAX_COURSE_COUNT +
                 " | Courses: " + Arrays.toString(courses) +
                 " | CourseCount: " + courseCount;

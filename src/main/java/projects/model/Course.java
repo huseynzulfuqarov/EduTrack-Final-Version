@@ -130,7 +130,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course -> " +
+        return "Course ->" +
                 " | MAX_STUDENT_COUNT: " + MAX_COURSE_COUNT +
                 " | ID: " + id +
                 " | Name: " + name +
