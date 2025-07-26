@@ -7,14 +7,13 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Teacher extends Person implements Schedulable, Reportable {
-    private Course[] assignedCourses = new Course[3];
-    private int courseCount = 0;
-    private String[] schedule = new string[7];
 
-    public Teacher(Course[] assignedCourses, int courseCount, String[] schedule) {
-        this.assignedCourses = assignedCourses;
-        this.courseCount = courseCount;
-        this.schedule = schedule;
+    private Course[] assignedCourses;
+    private int courseCount = 0;
+    private String[] schedule;
+
+    public Teacher(String name, String email, int IQ) {
+        super(name,email,IQ);
     }
 
     public Course[] getAssignedCourses() {
@@ -41,53 +40,94 @@ public class Teacher extends Person implements Schedulable, Reportable {
         this.schedule = schedule;
     }
 
+
+
     public void assignCourse(Course course) {
-        if (courseCount<=3){
-            assignedCourses[courseCount] = course;
-            courseCount++;
+        if(course == null) {
+            System.out.println("Course can't be null");
+            return;
         }
-        else {
-            System.out.println("Array limiti kecibdir!");
+        if(assignedCourses.length >3) {
+            System.out.println("No More Course Can Be Assigned");
+
+        }else {
+            Course[] temp = new Course[++courseCount];
+            int tempIndex = 0;
+            for (Course c : assignedCourses) {
+                temp[tempIndex] = c;
+                tempIndex++;
+            }
+            temp[tempIndex] = course;
+            assignedCourses = temp;
         }
     }
 
     public void listAssignedCourses() {
-        if (courseCount==0){
-            System.out.println("Kurs yoxdur!");
-            return;
+        for (Course c : assignedCourses) {
+            System.out.println(c.getName());
         }
-        for (int i = 0; i < courseCount; i++){
-            if (assignedCourses[i] !=null){
-                System.out.println(" "+assignedCourses[i].getName());
-            }
-
-        }
-
     }
 
+    @Override
     public void assignSchedule(String[] days) {
-
-
+        schedule = days;
     }
 
+    @Override
     public void viewSchedule() {
-
+        if(schedule == null || schedule.length == 0) {
+            System.out.println("Schedule is Empty");
+        }else{
+            for(String day : schedule) {
+                System.out.println(day);
+            }
+        }
     }
 
-    public void  generateReport() {
-        System.out.println();
+
+    @Override
+    public String generateReport() {
+        StringBuilder report = new StringBuilder();
+        report.append("Teacher " + getName());
+        report.append("\nAssigned Courses: " + getCourseNames());
+
+        if(courseCount > 0) {
+            for(Course c : assignedCourses) {
+                report.append("\nStudents of "+ c.getName() + " course " + Arrays.toString(c.getStudents()));
+            }
+        }
+        return report.toString();
     }
 
+
+    // Helper Method for generateReport...
+    public String getCourseNames() {
+
+        if(assignedCourses == null || assignedCourses.length == 0) {
+            return "No Courses Assigned";
+        }
+        StringBuilder sb = new StringBuilder();
+
+        for(Course c : assignedCourses){
+            sb.append(c.getName() + " ");
+        }
+        return sb.toString();
+    }
+
+
+    @Override
     public void sendNotification(String message) {
-        System.out.println("Message" + name()+":"+ message);
+        System.out.println("Message: " + message);
     }
 
+
+    @Override
     public void printInfo() {
         System.out.println("Teacher info: ");
-        System.out.println("ID: " + getId);
-        System.out.println("Name: " + getName);
-        System.out.println("Email: " + getEmail);
-        System.out.println("IQ: " + getIq);
+        System.out.println("ID: " + getId());
+        System.out.println("Name: " + getName());
+        System.out.println("Email: " + getEmail());
+        System.out.println("IQ: " + getIQ());
     }
 
     @Override
@@ -105,6 +145,7 @@ public class Teacher extends Person implements Schedulable, Reportable {
     @Override
     public String toString() {
         return "Teacher{" +
+                 super.toString()+
                 "assignedCourses=" + Arrays.toString(assignedCourses) +
                 ", courseCount=" + courseCount +
                 ", schedule=" + Arrays.toString(schedule) +
