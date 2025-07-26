@@ -2,6 +2,7 @@ package projects.model;
 
 import projects.interfaces.Notifiable;
 import projects.interfaces.Reportable;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -51,11 +52,11 @@ public class Student extends Person implements Notifiable, Reportable {
     @Override
     public String generateReport() {
         if (courseCount == 0) {
-            return "There are no courses you can have in the system."
+            return "There are no courses you can have in the system.";
         }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < courseCount; i++) {
-           sb.append(courses[i].getName() + " ");
+            sb.append(courses[i].getName() + " ");
         }
         return sb.toString();
     }
@@ -69,7 +70,7 @@ public class Student extends Person implements Notifiable, Reportable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return super.equals() && courseCount == student.courseCount && Objects.deepEquals(courses, student.courses);
+        return courseCount == student.courseCount && Objects.deepEquals(courses, student.courses); //check super equals
     }
 
     @Override
@@ -79,8 +80,8 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public String toString() {
-        return "Student -> " +
-                " | Courses: " + Arrays.toString(Arrays.copyOf(courses, courseCount) +
-                " | CourseCount: " + courseCount + super.toString();
+        return "Student -> " + super.toString() +
+                " | Courses: " + Arrays.toString(Arrays.copyOf(courses, courseCount)) +
+                " | CourseCount: " + courseCount;
     }
 }
