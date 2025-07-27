@@ -1,6 +1,7 @@
 package projects.model;
 
 import projects.interfaces.Manageable;
+
 import java.util.Objects;
 
 public abstract class Person implements Manageable {
@@ -9,8 +10,15 @@ public abstract class Person implements Manageable {
     private String name;
     private String email;
     private int IQ;
-
     private static int idCount = 1;
+
+    static {
+        System.out.println("Person class loaded");
+    }
+
+    {
+        System.out.println("New person created");
+    }
 
     public Person(String name, String email, int IQ) {
         this.id = idCount++;

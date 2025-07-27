@@ -126,12 +126,13 @@ public class Course {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return Objects.equals(name, course.name) && Objects.equals(category, course.category);
+        return Objects.equals(name, course.getName()) &&
+                Objects.equals(category, course.getCategory());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, teacher, Arrays.hashCode(students), studentCount);
+        return Objects.hash(name, category);
     }
 
     @Override
