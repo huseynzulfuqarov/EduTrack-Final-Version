@@ -12,6 +12,17 @@ public class EduSystem {
     private static final int MAX_COURSE_COUNT = 20;
     private static final int MAX_STUDENT_COUNT = 50;
     private static final int MAX_TEACHER_COUNT = 10;
+    public int getCourseCount() {
+        return courses.length;
+    }
+
+    public int getStudentCount() {
+        return students.length;
+    }
+
+    public int getTeacherCount() {
+        return teachers.length;
+    }
         if (getCourseCount() >= MAX_COURSE_COUNT) {
         if (getStudentCount() >= MAX_STUDENT_COUNT) {
         if (getTeacherCount() >= MAX_TEACHER_COUNT) {

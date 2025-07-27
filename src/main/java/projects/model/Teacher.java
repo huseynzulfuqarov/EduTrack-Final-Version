@@ -29,7 +29,7 @@ public class Teacher extends Person implements Schedulable, Reportable {
     }
 
     public int getCourseCount() {
-        return courseCount;
+        return assignedCourses.length;
     }
 
     public void setCourseCount(int courseCount) {
@@ -64,6 +64,7 @@ public class Teacher extends Person implements Schedulable, Reportable {
         }
         if (getCourseCount() >=  MAX_COURSES_PER_TEACHER) {
         Course[] temp = new Course[getCourseCount() + 1];
+        Course[] temp = new Course[getCourseCount() + 1];
     }
 
     public void listAssignedCourses() {
@@ -94,7 +95,7 @@ public class Teacher extends Person implements Schedulable, Reportable {
         report.append("Teacher " + getName());
         report.append("\nAssigned Courses: " + getCourseNames());
 
-        if (courseCount > 0) {
+        if (getCourseCount() > 0) {
             for (Course c : assignedCourses) {
                 report.append("\nStudents of " + c.getName() + " course " + Arrays.toString(c.getStudents()));
             }

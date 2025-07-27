@@ -25,7 +25,7 @@ public class Student extends Person implements Notifiable, Reportable {
     }
 
     public int getCourseCount() {
-        return courseCount;
+        return courses.length;
     }
 
     public int getMaxCoursesPerStudents() {
@@ -43,18 +43,20 @@ public class Student extends Person implements Notifiable, Reportable {
         }
         Course[] temp = new Course[++courseCount];
         for (int i = 0; i < courseCount - 1; i++) {
+        Course[] temp = new Course[getCourseCount() + 1];
+        for (int i = 0; i < getCourseCount(); i++) {
             temp[i] = courses[i];
         }
-        temp[courseCount - 1] = course;
+        temp[getCourseCount()] = course;
         courses = temp;
     }
 
     public void listCourses() {
-        if (courseCount == 0) {
-            System.out.println("There are no courses you can have in the system.");
+        if (getCourseCount() == 0) {
+            System.out.println("There are no courses you can have in the system. IN STUDENT CLASS");
             return;
         }
-        for (int i = 0; i < courseCount; i++) {
+        for (int i = 0; i < getCourseCount(); i++) {
             System.out.println(courses[i].getName());
         }
     }
@@ -66,11 +68,11 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public String generateReport() {
-        if (courseCount == 0) {
-            return "There are no courses you can have in the system.";
+        if (getCourseCount() == 0) {
+            return "There are no courses you can have in the system. IN STUDENT CLASS";
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < courseCount; i++) {
+        for (int i = 0; i < getCourseCount(); i++) {
             sb.append(courses[i].getName() + " ");
         }
         return sb.toString();

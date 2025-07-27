@@ -67,11 +67,7 @@ public class Course {
     }
 
     public int getStudentCount() {
-        return studentCount;
-    }
-
-    public void setStudentCount(int studentCount) {
-        this.studentCount = studentCount;
+        return students.length;
     }
 
     public void addStudent(Student student) {
@@ -85,14 +81,16 @@ public class Course {
         }
         Student[] temp = new Student[++studentCount];
         for (int i = 0; i < studentCount - 1; i++) {
+        Student[] temp = new Student[getStudentCount() + 1];
+        for (int i = 0; i < getStudentCount(); i++) {
             temp[i] = students[i];
         }
-        temp[studentCount - 1] = student;
+        temp[getStudentCount()] = student;
         students = temp;
     }
 
     public int findStudentIndex(int id) {
-        for (int i = 0; i < studentCount; i++) {
+        for (int i = 0; i < getStudentCount(); i++) {
             if (students[i].getId() == id) {
                 return i;
             }
@@ -101,13 +99,13 @@ public class Course {
     }
 
     public void removeStudent(int index) {
-        if (index < 0 || index > studentCount - 1) {
-            System.out.println("Not found given index");
+        if (index < 0 || index > getStudentCount() - 1) {
+            System.out.println("Not found given index. IN COURSE CLASS");
             return;
         }
-        Student[] temp = new Student[studentCount - 1];
+        Student[] temp = new Student[getStudentCount() - 1];
         int count = 0;
-        for (int i = 0; i < studentCount; i++) {
+        for (int i = 0; i < getStudentCount(); i++) {
             if (i != index) {
                 temp[count++] = students[i];
             }
@@ -142,5 +140,6 @@ public class Course {
                 " | Teacher: " + teacher +
                 " | Students: " + Arrays.toString(students) +
                 " | StudentCount: " + studentCount;
+                " | StudentCount: " + getStudentCount();
     }
 }
