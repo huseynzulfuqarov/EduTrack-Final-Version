@@ -2,22 +2,18 @@ package projects.model;
 
 import projects.interfaces.Notifiable;
 import projects.interfaces.Reportable;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class Student extends Person implements Notifiable, Reportable {
     private static final int MAX_COURSES_PER_STUDENTS = 5;
     private Course[] courses;
-    private int courseCount;
 
     public Student(String name, String email, int iq) {
         super(name, email, iq);
-        this.courses = null;
-        this.courseCount = 0;
+        this.courses = new Course[0];
     }
 
     public Course[] getCourses() {
-        return courses;
+        return courses; //Arrays.copyOf
     }
 
     public void setCourses(Course[] courses) {
@@ -25,7 +21,7 @@ public class Student extends Person implements Notifiable, Reportable {
     }
 
     public int getCourseCount() {
-        return courseCount;
+        return courses.length;
     }
 
     public int getMaxCoursesPerStudents() {
@@ -33,30 +29,46 @@ public class Student extends Person implements Notifiable, Reportable {
     }
 
     public void enrollToCourse(Course course) {
-        if (course == null) {
-            System.out.println("Value can't be null.");
+/*        if (course == null) {
+            System.out.println("Value can't be null. IN STUDENT CLASS");
             return;
         }
-        if (courseCount == MAX_COURSE_COUNT) {
-            System.out.println("You have maximum course count.");
+        if (getCourseCount() == MAX_COURSES_PER_STUDENTS) {
+            System.out.println("You have maximum course count. IN STUDENT CLASS");
             return;
-        }
-        Course[] temp = new Course[++courseCount];
-        for (int i = 0; i < courseCount - 1; i++) {
+        }*/
+      /*  for (Course c : courses) {
+            if (c.equals(course)) {
+                return;
+            }
+        }*/
+        Course[] temp = new Course[getCourseCount() + 1];
+        for (int i = 0; i < getCourseCount(); i++) {
             temp[i] = courses[i];
         }
-        temp[courseCount - 1] = course;
+        temp[getCourseCount()] = course;
         courses = temp;
+        // course.addStudent(this);
+        // System.out.println("Student " + getName() + " has been added "+course.getName()+ " course.");
     }
 
     public void listCourses() {
-        if (courseCount == 0) {
-            System.out.println("There are no courses you can have in the system.");
+        if (getCourseCount() == 0) {
+            System.out.println("There are no courses you can have in the system. IN STUDENT CLASS");
             return;
         }
-        for (int i = 0; i < courseCount; i++) {
+        for (int i = 0; i < getCourseCount(); i++) {
             System.out.println(courses[i].getName());
         }
+    }
+
+    public String courseArrayNamePrint(Course[] courses) {
+        StringBuilder sb = new StringBuilder("[");
+        for (Course course : courses) {
+            sb.append(course.getName() + " ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     @Override
@@ -66,11 +78,11 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public String generateReport() {
-        if (courseCount == 0) {
-            return "There are no courses you can have in the system.";
+        if (getCourseCount() == 0) {
+            return "There are no courses you can have in the system. IN STUDENT CLASS";
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < courseCount; i++) {
+        for (int i = 0; i < getCourseCount(); i++) {
             sb.append(courses[i].getName() + " ");
         }
         return sb.toString();
@@ -83,14 +95,14 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return courseCount == student.courseCount && Objects.deepEquals(courses, student.courses); //check super equals
+        if (!(o instanceof Student student)) return false;
+        if (!super.equals(o)) return false;
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Arrays.hashCode(courses), courseCount);
+        return super.hashCode();
     }
 
     @Override

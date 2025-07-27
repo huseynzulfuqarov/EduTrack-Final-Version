@@ -9,11 +9,11 @@ import java.util.Objects;
 public class Teacher extends Person implements Schedulable, Reportable {
     private static final int MAX_COURSES_PER_TEACHER = 3;
     private Course[] assignedCourses;
-    private int courseCount = 0;
     private String[] schedule;
 
     public Teacher(String name, String email, int IQ) {
         super(name, email, IQ);
+        this.assignedCourses = new Course[0];
     }
 
     public Course[] getAssignedCourses() {
@@ -29,41 +29,33 @@ public class Teacher extends Person implements Schedulable, Reportable {
     }
 
     public int getCourseCount() {
-        return courseCount;
-    }
-
-    public void setCourseCount(int courseCount) {
-        this.courseCount = courseCount;
+        return assignedCourses.length;
     }
 
     public String[] getSchedule() {
-        return schedule;
+        return schedule; //Arrays.copyOf
     }
 
     public void setSchedule(String[] schedule) {
-        this.schedule = schedule;
+        this.schedule = schedule; //Arrays.copyOf
     }
 
     public void assignCourse(Course course) {
-        if (course == null) {
-            System.out.println("Course can't be null");
+        /*if (course == null) {
+            System.out.println("Course can't be null. IN TEACHER CLASS");
             return;
         }
-        if (assignedCourses.length > 3) {
-            System.out.println("No More Course Can Be Assigned");
-
-        } else {
-            Course[] temp = new Course[++courseCount];
-            int tempIndex = 0;
-            for (Course c : assignedCourses) {
-                temp[tempIndex] = c;
-                tempIndex++;
-            }
-            temp[tempIndex] = course;
-            assignedCourses = temp;
-        }
         if (getCourseCount() >=  MAX_COURSES_PER_TEACHER) {
+            System.out.println("No More Course Can Be Assigned. IN TEACHER CLASS");
+        }*/
         Course[] temp = new Course[getCourseCount() + 1];
+        int tempIndex = 0;
+        for (Course c : assignedCourses) {
+            temp[tempIndex] = c;
+            tempIndex++;
+        }
+        temp[tempIndex] = course;
+        assignedCourses = temp;
     }
 
     public void listAssignedCourses() {
@@ -94,7 +86,7 @@ public class Teacher extends Person implements Schedulable, Reportable {
         report.append("Teacher " + getName());
         report.append("\nAssigned Courses: " + getCourseNames());
 
-        if (courseCount > 0) {
+        if (getCourseCount() > 0) {
             for (Course c : assignedCourses) {
                 report.append("\nStudents of " + c.getName() + " course " + Arrays.toString(c.getStudents()));
             }
@@ -106,13 +98,22 @@ public class Teacher extends Person implements Schedulable, Reportable {
     public String getCourseNames() {
 
         if (assignedCourses == null || assignedCourses.length == 0) {
-            return "No Courses Assigned";
+            return "No Courses Assigned. IN TEACHER CLASS";
         }
         StringBuilder sb = new StringBuilder();
 
         for (Course c : assignedCourses) {
             sb.append(c.getName() + " ");
         }
+        return sb.toString();
+    }
+
+    private String courseArrayNamePrint(Course[] courses) {
+        StringBuilder sb = new StringBuilder("[");
+        for (Course c : courses) {
+            sb.append(c.getName() + " ");
+        }
+        sb.append("]");
         return sb.toString();
     }
 
@@ -132,14 +133,14 @@ public class Teacher extends Person implements Schedulable, Reportable {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Teacher teacher = (Teacher) o;
-        return courseCount == teacher.courseCount && Objects.deepEquals(assignedCourses, teacher.assignedCourses) && Objects.deepEquals(schedule, teacher.schedule);
+        if (!(o instanceof Teacher teacher)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.deepEquals(assignedCourses, teacher.assignedCourses) && Objects.deepEquals(schedule, teacher.schedule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Arrays.hashCode(assignedCourses), courseCount, Arrays.hashCode(schedule));
+        return Objects.hash(super.hashCode(), Arrays.hashCode(assignedCourses), Arrays.hashCode(schedule));
     }
 
     @Override
