@@ -32,22 +32,27 @@ public class Student extends Person implements Notifiable, Reportable {
     }
 
     public void enrollToCourse(Course course) {
-        if (course == null) {
-            System.out.println("Value can't be null.");
+/*        if (course == null) {
+            System.out.println("Value can't be null. IN STUDENT CLASS");
             return;
         }
-        if (courseCount == MAX_COURSE_COUNT) {
-            System.out.println("You have maximum course count.");
+        if (getCourseCount() == MAX_COURSES_PER_STUDENTS) {
+            System.out.println("You have maximum course count. IN STUDENT CLASS");
             return;
-        }
-        Course[] temp = new Course[++courseCount];
-        for (int i = 0; i < courseCount - 1; i++) {
+        }*/
+      /*  for (Course c : courses) {
+            if (c.equals(course)) {
+                return;
+            }
+        }*/
         Course[] temp = new Course[getCourseCount() + 1];
         for (int i = 0; i < getCourseCount(); i++) {
             temp[i] = courses[i];
         }
         temp[getCourseCount()] = course;
         courses = temp;
+        // course.addStudent(this);
+        // System.out.println("Student " + getName() + " has been added "+course.getName()+ " course.");
     }
 
     public void listCourses() {

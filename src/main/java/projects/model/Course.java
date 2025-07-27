@@ -71,6 +71,8 @@ public class Course {
     public void addStudent(Student student) {
         if (student == null) {
             System.out.println("Value can't be null.");
+/*        if (student == null) {
+            System.out.println("Value can't be null. IN COURSE CLASS");
             return;
         }
         if (studentCount == MAX_COURSE_COUNT) {
@@ -79,12 +81,23 @@ public class Course {
         }
         Student[] temp = new Student[++studentCount];
         for (int i = 0; i < studentCount - 1; i++) {
+        if (getStudentCount() == MAX_STUDENTS_PER_COURSE) {
+            System.out.println("You have maximum student count. IN COURSE CLASS");
+            return;
+        }*/
+        /*for (Student s : students) {
+            if (s.getId() == student.getId()) {
+                return;
+            }
+        }*/
         Student[] temp = new Student[getStudentCount() + 1];
         for (int i = 0; i < getStudentCount(); i++) {
             temp[i] = students[i];
         }
         temp[getStudentCount()] = student;
         students = temp;
+        // student.enrollToCourse(this);
+        // System.out.println("Student " + student.getName() + " has been added " + this.getName()+ " course.");
     }
 
     public int findStudentIndex(int id) {

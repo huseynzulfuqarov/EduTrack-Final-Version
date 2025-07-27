@@ -46,26 +46,21 @@ public class Teacher extends Person implements Schedulable, Reportable {
     }
 
     public void assignCourse(Course course) {
-        if (course == null) {
-            System.out.println("Course can't be null");
+        /*if (course == null) {
+            System.out.println("Course can't be null. IN TEACHER CLASS");
             return;
         }
-        if (assignedCourses.length > 3) {
-            System.out.println("No More Course Can Be Assigned");
-
-        } else {
-            Course[] temp = new Course[++courseCount];
-            int tempIndex = 0;
-            for (Course c : assignedCourses) {
-                temp[tempIndex] = c;
-                tempIndex++;
-            }
-            temp[tempIndex] = course;
-            assignedCourses = temp;
-        }
         if (getCourseCount() >=  MAX_COURSES_PER_TEACHER) {
+            System.out.println("No More Course Can Be Assigned. IN TEACHER CLASS");
+        }*/
         Course[] temp = new Course[getCourseCount() + 1];
-        Course[] temp = new Course[getCourseCount() + 1];
+        int tempIndex = 0;
+        for (Course c : assignedCourses) {
+            temp[tempIndex] = c;
+            tempIndex++;
+        }
+        temp[tempIndex] = course;
+        assignedCourses = temp;
     }
 
     public void listAssignedCourses() {
