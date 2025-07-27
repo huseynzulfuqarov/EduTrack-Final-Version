@@ -114,6 +114,12 @@ public class Course {
 
     public void printCourseInfo() {
         System.out.println("Name: " + name + " Teacher" + teacher.getName() + " Student Count: " + studentCount);
+        if (this.getTeacher() != null) {
+            System.out.println("Name: " + name + " Teacher" + teacher.getName() + " Student Count: " + getStudentCount());
+        } else {
+            System.out.println("Name: " + name + " Teacher is null" + " Student Count: " + getStudentCount());
+        }
+    }
     }
 
     @Override
