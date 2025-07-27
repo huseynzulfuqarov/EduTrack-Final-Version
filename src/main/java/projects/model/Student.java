@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Student extends Person implements Notifiable, Reportable {
-    private static int MAX_COURSE_COUNT=5;
+    private static final int MAX_COURSES_PER_STUDENTS = 5;
     private Course[] courses;
     private int courseCount;
 
@@ -28,8 +28,8 @@ public class Student extends Person implements Notifiable, Reportable {
         return courseCount;
     }
 
-    public void setCourseCount(int courseCount) {
-        this.courseCount = courseCount;
+    public int getMaxCoursesPerStudents() {
+        return MAX_COURSES_PER_STUDENTS;
     }
 
     public void enrollToCourse(Course course) {
@@ -37,13 +37,13 @@ public class Student extends Person implements Notifiable, Reportable {
             System.out.println("Value can't be null.");
             return;
         }
-        if(courseCount == MAX_COURSE_COUNT){
+        if (courseCount == MAX_COURSE_COUNT) {
             System.out.println("You have maximum course count.");
             return;
         }
         Course[] temp = new Course[++courseCount];
-        for (int i = 0; i < courseCount -1; i++) {
-                temp[i] = courses[i];
+        for (int i = 0; i < courseCount - 1; i++) {
+            temp[i] = courses[i];
         }
         temp[courseCount - 1] = course;
         courses = temp;
@@ -95,8 +95,9 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public String toString() {
-        return "Student -> " + super.toString() +
-                " | Courses: " + Arrays.toString(courses) +
-                " | CourseCount: " + courseCount;
+        return "Student ->" + super.toString() +
+                " | MAX_COURSES_PER_STUDENTS: " + MAX_COURSES_PER_STUDENTS +
+                " | Courses: " + courseArrayNamePrint(courses) +
+                " | CourseCount: " + getCourseCount();
     }
 }

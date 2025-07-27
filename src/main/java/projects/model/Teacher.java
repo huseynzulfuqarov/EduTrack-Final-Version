@@ -7,13 +7,13 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Teacher extends Person implements Schedulable, Reportable {
-
+    private static final int MAX_COURSES_PER_TEACHER = 3;
     private Course[] assignedCourses;
     private int courseCount = 0;
     private String[] schedule;
 
     public Teacher(String name, String email, int IQ) {
-        super(name,email,IQ);
+        super(name, email, IQ);
     }
 
     public Course[] getAssignedCourses() {
@@ -22,6 +22,10 @@ public class Teacher extends Person implements Schedulable, Reportable {
 
     public void setAssignedCourses(Course[] assignedCourses) {
         this.assignedCourses = assignedCourses;
+    }
+
+    public int getMaxCoursesPerTeacher() {
+        return MAX_COURSES_PER_TEACHER;
     }
 
     public int getCourseCount() {
@@ -40,17 +44,15 @@ public class Teacher extends Person implements Schedulable, Reportable {
         this.schedule = schedule;
     }
 
-
-
     public void assignCourse(Course course) {
-        if(course == null) {
+        if (course == null) {
             System.out.println("Course can't be null");
             return;
         }
-        if(assignedCourses.length >3) {
+        if (assignedCourses.length > 3) {
             System.out.println("No More Course Can Be Assigned");
 
-        }else {
+        } else {
             Course[] temp = new Course[++courseCount];
             int tempIndex = 0;
             for (Course c : assignedCourses) {
@@ -60,6 +62,8 @@ public class Teacher extends Person implements Schedulable, Reportable {
             temp[tempIndex] = course;
             assignedCourses = temp;
         }
+        if (getCourseCount() >=  MAX_COURSES_PER_TEACHER) {
+        Course[] temp = new Course[getCourseCount() + 1];
     }
 
     public void listAssignedCourses() {
@@ -75,15 +79,14 @@ public class Teacher extends Person implements Schedulable, Reportable {
 
     @Override
     public void viewSchedule() {
-        if(schedule == null || schedule.length == 0) {
+        if (schedule == null || schedule.length == 0) {
             System.out.println("Schedule is Empty");
-        }else{
-            for(String day : schedule) {
+        } else {
+            for (String day : schedule) {
                 System.out.println(day);
             }
         }
     }
-
 
     @Override
     public String generateReport() {
@@ -91,35 +94,32 @@ public class Teacher extends Person implements Schedulable, Reportable {
         report.append("Teacher " + getName());
         report.append("\nAssigned Courses: " + getCourseNames());
 
-        if(courseCount > 0) {
-            for(Course c : assignedCourses) {
-                report.append("\nStudents of "+ c.getName() + " course " + Arrays.toString(c.getStudents()));
+        if (courseCount > 0) {
+            for (Course c : assignedCourses) {
+                report.append("\nStudents of " + c.getName() + " course " + Arrays.toString(c.getStudents()));
             }
         }
         return report.toString();
     }
 
-
     // Helper Method for generateReport...
     public String getCourseNames() {
 
-        if(assignedCourses == null || assignedCourses.length == 0) {
+        if (assignedCourses == null || assignedCourses.length == 0) {
             return "No Courses Assigned";
         }
         StringBuilder sb = new StringBuilder();
 
-        for(Course c : assignedCourses){
+        for (Course c : assignedCourses) {
             sb.append(c.getName() + " ");
         }
         return sb.toString();
     }
 
-
     @Override
     public void sendNotification(String message) {
         System.out.println("Message: " + message);
     }
-
 
     @Override
     public void printInfo() {
@@ -144,11 +144,10 @@ public class Teacher extends Person implements Schedulable, Reportable {
 
     @Override
     public String toString() {
-        return "Teacher{" +
-                 super.toString()+
-                "assignedCourses=" + Arrays.toString(assignedCourses) +
-                ", courseCount=" + courseCount +
-                ", schedule=" + Arrays.toString(schedule) +
-                '}';
+        return "Teacher ->" + super.toString() +
+                " | MAX_COURSES_PER_TEACHER: " + MAX_COURSES_PER_TEACHER +
+                " | AssignedCourses=" + courseArrayNamePrint(assignedCourses) +
+                " | CourseCount=" + getCourseCount() +
+                " | Schedule=" + Arrays.toString(schedule);
     }
 }
