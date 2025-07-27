@@ -14,6 +14,7 @@ public class Teacher extends Person implements Schedulable, Reportable {
 
     public Teacher(String name, String email, int IQ) {
         super(name, email, IQ);
+        this.assignedCourses = new Course[0];
     }
 
     public Course[] getAssignedCourses() {

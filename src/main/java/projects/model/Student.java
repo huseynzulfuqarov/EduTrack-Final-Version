@@ -12,8 +12,7 @@ public class Student extends Person implements Notifiable, Reportable {
 
     public Student(String name, String email, int iq) {
         super(name, email, iq);
-        this.courses = null;
-        this.courseCount = 0;
+        this.courses = new Course[0];
     }
 
     public Course[] getCourses() {

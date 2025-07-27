@@ -17,9 +17,7 @@ public class Course {
         this.id = nextId++;
         this.name = name;
         this.category = category;
-        this.teacher = teacher;
-        this.students = null;
-        this.studentCount = 0;
+        this.students = new Student[0];
     }
 
     public int getId() {
