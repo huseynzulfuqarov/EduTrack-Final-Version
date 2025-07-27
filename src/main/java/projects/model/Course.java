@@ -69,18 +69,10 @@ public class Course {
     }
 
     public void addStudent(Student student) {
-        if (student == null) {
-            System.out.println("Value can't be null.");
 /*        if (student == null) {
             System.out.println("Value can't be null. IN COURSE CLASS");
             return;
         }
-        if (studentCount == MAX_COURSE_COUNT) {
-            System.out.println("You have maximum student count.");
-            return;
-        }
-        Student[] temp = new Student[++studentCount];
-        for (int i = 0; i < studentCount - 1; i++) {
         if (getStudentCount() == MAX_STUDENTS_PER_COURSE) {
             System.out.println("You have maximum student count. IN COURSE CLASS");
             return;
