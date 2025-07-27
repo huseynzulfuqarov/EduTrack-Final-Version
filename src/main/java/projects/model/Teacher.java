@@ -118,6 +118,15 @@ public class Teacher extends Person implements Schedulable, Reportable {
         return sb.toString();
     }
 
+    private String courseArrayNamePrint(Course[] courses) {
+        StringBuilder sb = new StringBuilder("[");
+        for (Course c : courses) {
+            sb.append(c.getName() + " ");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
     @Override
     public void sendNotification(String message) {
         System.out.println("Message: " + message);

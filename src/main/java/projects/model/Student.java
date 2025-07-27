@@ -60,6 +60,15 @@ public class Student extends Person implements Notifiable, Reportable {
         }
     }
 
+    public String courseArrayNamePrint(Course[] courses) {
+        StringBuilder sb = new StringBuilder("[");
+        for (Course course : courses) {
+            sb.append(course.getName() + " ");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
     @Override
     public void printInfo() {
         System.out.println("ID: " + getId() + "Name: " + getName() + "Email: " + getEmail());

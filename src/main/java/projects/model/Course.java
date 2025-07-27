@@ -120,6 +120,14 @@ public class Course {
             System.out.println("Name: " + name + " Teacher is null" + " Student Count: " + getStudentCount());
         }
     }
+
+    public String studentArrayNamePrint(Student[] students) {
+        StringBuilder sb = new StringBuilder("[");
+        for (Student student : students) {
+            sb.append(student.getName() + " ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     @Override
@@ -143,8 +151,7 @@ public class Course {
                 " | Name: " + name +
                 " | Category: " + category +
                 " | Teacher: " + teacher +
-                " | Students: " + Arrays.toString(students) +
-                " | StudentCount: " + studentCount;
+                " | Students: " + studentArrayNamePrint(students) +
                 " | StudentCount: " + getStudentCount();
     }
 }
