@@ -38,11 +38,11 @@ public class Teacher extends Person implements Schedulable, Reportable {
     }
 
     public String[] getSchedule() {
-        return schedule;
+        return schedule; //Arrays.copyOf
     }
 
     public void setSchedule(String[] schedule) {
-        this.schedule = schedule;
+        this.schedule = schedule; //Arrays.copyOf
     }
 
     public void assignCourse(Course course) {
@@ -103,7 +103,7 @@ public class Teacher extends Person implements Schedulable, Reportable {
     public String getCourseNames() {
 
         if (assignedCourses == null || assignedCourses.length == 0) {
-            return "No Courses Assigned";
+            return "No Courses Assigned. IN TEACHER CLASS";
         }
         StringBuilder sb = new StringBuilder();
 

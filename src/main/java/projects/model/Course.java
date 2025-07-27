@@ -57,7 +57,7 @@ public class Course {
     }
 
     public Student[] getStudents() {
-        return students;
+        return students; //Arrays.copyOf
     }
 
     public void setStudents(Student[] students) {
@@ -137,7 +137,9 @@ public class Course {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Course course = (Course) o;
         return Objects.equals(name, course.getName()) &&
                 Objects.equals(category, course.getCategory());

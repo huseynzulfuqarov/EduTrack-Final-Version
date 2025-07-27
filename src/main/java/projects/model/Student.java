@@ -16,7 +16,7 @@ public class Student extends Person implements Notifiable, Reportable {
     }
 
     public Course[] getCourses() {
-        return courses;
+        return courses; //Arrays.copyOf
     }
 
     public void setCourses(Course[] courses) {
