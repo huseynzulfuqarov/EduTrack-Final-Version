@@ -9,7 +9,6 @@ import java.util.Objects;
 public class Teacher extends Person implements Schedulable, Reportable {
     private static final int MAX_COURSES_PER_TEACHER = 3;
     private Course[] assignedCourses;
-    private int courseCount = 0;
     private String[] schedule;
 
     public Teacher(String name, String email, int IQ) {
@@ -31,10 +30,6 @@ public class Teacher extends Person implements Schedulable, Reportable {
 
     public int getCourseCount() {
         return assignedCourses.length;
-    }
-
-    public void setCourseCount(int courseCount) {
-        this.courseCount = courseCount;
     }
 
     public String[] getSchedule() {
@@ -138,14 +133,14 @@ public class Teacher extends Person implements Schedulable, Reportable {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Teacher teacher = (Teacher) o;
-        return courseCount == teacher.courseCount && Objects.deepEquals(assignedCourses, teacher.assignedCourses) && Objects.deepEquals(schedule, teacher.schedule);
+        if (!(o instanceof Teacher teacher)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.deepEquals(assignedCourses, teacher.assignedCourses) && Objects.deepEquals(schedule, teacher.schedule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Arrays.hashCode(assignedCourses), courseCount, Arrays.hashCode(schedule));
+        return Objects.hash(super.hashCode(), Arrays.hashCode(assignedCourses), Arrays.hashCode(schedule));
     }
 
     @Override

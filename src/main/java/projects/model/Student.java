@@ -2,13 +2,10 @@ package projects.model;
 
 import projects.interfaces.Notifiable;
 import projects.interfaces.Reportable;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class Student extends Person implements Notifiable, Reportable {
     private static final int MAX_COURSES_PER_STUDENTS = 5;
     private Course[] courses;
-    private int courseCount;
 
     public Student(String name, String email, int iq) {
         super(name, email, iq);
@@ -98,14 +95,14 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return courseCount == student.courseCount && Objects.deepEquals(courses, student.courses); //check super equals
+        if (!(o instanceof Student student)) return false;
+        if (!super.equals(o)) return false;
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Arrays.hashCode(courses), courseCount);
+        return super.hashCode();
     }
 
     @Override

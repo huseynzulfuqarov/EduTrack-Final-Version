@@ -1,6 +1,5 @@
 package projects.model;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Course {
@@ -11,9 +10,8 @@ public class Course {
     private String category;
     private Teacher teacher;
     private Student[] students;
-    private int studentCount;
 
-    public Course(String name, String category, Teacher teacher) {
+    public Course(String name, String category) {
         this.id = nextId++;
         this.name = name;
         this.category = category;
@@ -113,12 +111,10 @@ public class Course {
                 temp[count++] = students[i];
             }
         }
-        studentCount--;
         students = temp;
     }
 
     public void printCourseInfo() {
-        System.out.println("Name: " + name + " Teacher" + teacher.getName() + " Student Count: " + studentCount);
         if (this.getTeacher() != null) {
             System.out.println("Name: " + name + " Teacher" + teacher.getName() + " Student Count: " + getStudentCount());
         } else {
