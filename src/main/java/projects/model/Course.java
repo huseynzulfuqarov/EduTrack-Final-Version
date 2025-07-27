@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Course {
-    private static int MAX_COURSE_COUNT = 10;
+    private static final int MAX_STUDENTS_PER_COURSE = 10;
     private static int nextId = 0;
     private int id;
     private String name;
@@ -28,6 +28,10 @@ public class Course {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getMaxStudentsPerCourse() {
+        return MAX_STUDENTS_PER_COURSE;
     }
 
     public String getName() {
@@ -131,7 +135,7 @@ public class Course {
     @Override
     public String toString() {
         return "Course ->" +
-                " | MAX_STUDENT_COUNT: " + MAX_COURSE_COUNT +
+                " | MAX_STUDENTS_PER_COURSE: " + MAX_STUDENTS_PER_COURSE +
                 " | ID: " + id +
                 " | Name: " + name +
                 " | Category: " + category +

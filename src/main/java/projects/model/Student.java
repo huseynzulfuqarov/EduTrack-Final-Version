@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Student extends Person implements Notifiable, Reportable {
-    private static int MAX_COURSE_COUNT = 5;
+    private static final int MAX_COURSES_PER_STUDENTS = 5;
     private Course[] courses;
     private int courseCount;
 
@@ -28,8 +28,8 @@ public class Student extends Person implements Notifiable, Reportable {
         return courseCount;
     }
 
-    public void setCourseCount(int courseCount) {
-        this.courseCount = courseCount;
+    public int getMaxCoursesPerStudents() {
+        return MAX_COURSES_PER_STUDENTS;
     }
 
     public void enrollToCourse(Course course) {
@@ -96,8 +96,8 @@ public class Student extends Person implements Notifiable, Reportable {
     @Override
     public String toString() {
         return "Student ->" + super.toString() +
-                " | MAX_COURSE_COUNT:  " + MAX_COURSE_COUNT +
-                " | Courses: " + Arrays.toString(courses) +
-                " | CourseCount: " + courseCount;
+                " | MAX_COURSES_PER_STUDENTS: " + MAX_COURSES_PER_STUDENTS +
+                " | Courses: " + courseArrayNamePrint(courses) +
+                " | CourseCount: " + getCourseCount();
     }
 }

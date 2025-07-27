@@ -9,6 +9,12 @@ public class EduSystem {
     Student[] students = new Student[50];
     Teacher[] teachers = new Teacher[10];
     int courseCount, studentCount, teacherCount;
+    private static final int MAX_COURSE_COUNT = 20;
+    private static final int MAX_STUDENT_COUNT = 50;
+    private static final int MAX_TEACHER_COUNT = 10;
+        if (getCourseCount() >= MAX_COURSE_COUNT) {
+        if (getStudentCount() >= MAX_STUDENT_COUNT) {
+        if (getTeacherCount() >= MAX_TEACHER_COUNT) {
 
     public void addCourse(Course course){}
 

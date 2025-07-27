@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Teacher extends Person implements Schedulable, Reportable {
-
+    private static final int MAX_COURSES_PER_TEACHER = 3;
     private Course[] assignedCourses;
     private int courseCount = 0;
     private String[] schedule;
@@ -22,6 +22,10 @@ public class Teacher extends Person implements Schedulable, Reportable {
 
     public void setAssignedCourses(Course[] assignedCourses) {
         this.assignedCourses = assignedCourses;
+    }
+
+    public int getMaxCoursesPerTeacher() {
+        return MAX_COURSES_PER_TEACHER;
     }
 
     public int getCourseCount() {
@@ -58,6 +62,8 @@ public class Teacher extends Person implements Schedulable, Reportable {
             temp[tempIndex] = course;
             assignedCourses = temp;
         }
+        if (getCourseCount() >=  MAX_COURSES_PER_TEACHER) {
+        Course[] temp = new Course[getCourseCount() + 1];
     }
 
     public void listAssignedCourses() {
@@ -139,8 +145,9 @@ public class Teacher extends Person implements Schedulable, Reportable {
     @Override
     public String toString() {
         return "Teacher ->" + super.toString() +
-                " | AssignedCourses=" + Arrays.toString(assignedCourses) +
-                " | CourseCount=" + courseCount +
+                " | MAX_COURSES_PER_TEACHER: " + MAX_COURSES_PER_TEACHER +
+                " | AssignedCourses=" + courseArrayNamePrint(assignedCourses) +
+                " | CourseCount=" + getCourseCount() +
                 " | Schedule=" + Arrays.toString(schedule);
     }
 }
