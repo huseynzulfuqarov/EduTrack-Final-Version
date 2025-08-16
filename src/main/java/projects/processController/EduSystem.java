@@ -4,56 +4,34 @@ import projects.model.Course;
 import projects.model.Student;
 import projects.model.Teacher;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EduSystem {
     private static final int MAX_COURSE_COUNT = 20;
     private static final int MAX_STUDENT_COUNT = 50;
     private static final int MAX_TEACHER_COUNT = 10;
-    private Course[] courses = new Course[0];
-    private Student[] students = new Student[0];
-    private Teacher[] teachers = new Teacher[0];
+    private final List<Course> courses;
+    private final List<Student> students;
+    private final List<Teacher> teachers;
 
     public EduSystem() {
+        this.courses = new ArrayList<>();
+        this.students = new ArrayList<>();
+        this.teachers = new ArrayList<>();
     }
 
     public int getCourseCount() {
-        return courses.length;
+        return courses.size();
     }
 
     public int getStudentCount() {
-        return students.length;
+        return students.size();
     }
 
     public int getTeacherCount() {
-        return teachers.length;
+        return teachers.size();
     }
-
-/*    public Object[] addElementToArray(Object[] array,Object object, int MAX_LIMIT, String type) {
-        if (object == null) {
-            System.out.println(type + " can't be null");
-            return array;
-        }
-        if (array.length >= MAX_LIMIT) {
-            System.out.println("You have reached the maximum number of " + type + "! IN EDUSYSTEM CLASS");
-            return array;
-        }
-        Object[] temp = Arrays.copyOf(array, array.length + 1);
-        temp[array.length] = object;
-        return temp;
-    }
-
-    public void addCourse(Course course) {
-        this.courses = (Course[])addElementToArray(courses,course, MAX_COURSE_COUNT, "Course");
-    }
-
-    public void addStudent(Student student) {
-        this.students = (Student[]) addElementToArray(students,student, MAX_STUDENT_COUNT, "Student");
-    }
-
-    public void addTeacher(Teacher teacher) {
-        this.teachers = (Teacher[]) addElementToArray(teachers,teacher, MAX_TEACHER_COUNT, "Teacher");
-    }*/
 
     public void addCourse(Course course) {
         if (course == null) {
@@ -64,9 +42,7 @@ public class EduSystem {
             System.out.println("You have reached the maximum number of courses! IN EDUSYSTEM CLASS");
             return;
         }
-        Course[] temp = Arrays.copyOf(courses, getCourseCount() + 1);
-        temp[getCourseCount()] = course;
-        courses = temp;
+        courses.add(course);
     }
 
     public void addStudent(Student student) {
@@ -78,9 +54,7 @@ public class EduSystem {
             System.out.println("You have reached the maximum number of students! IN EDUSYSTEM CLASS");
             return;
         }
-        Student[] temp = Arrays.copyOf(students, getStudentCount() + 1);
-        temp[getStudentCount()] = student;
-        students = temp;
+        students.add(student);
     }
 
     public void addTeacher(Teacher teacher) {
@@ -92,9 +66,7 @@ public class EduSystem {
             System.out.println("You have reached the maximum number of teachers! IN EDUSYSTEM CLASS");
             return;
         }
-        Teacher[] temp = Arrays.copyOf(teachers, getTeacherCount() + 1);
-        temp[getTeacherCount()] = teacher;
-        teachers = temp;
+        teachers.add(teacher);
     }
 
     public void assignTeacherToCourse(int courseId, int teacherId) {

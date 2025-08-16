@@ -1,29 +1,28 @@
 package projects.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class Course {
     private static final int MAX_STUDENTS_PER_COURSE = 10;
     private static int nextId = 0;
-    private int id;
+    private final int id;
     private String name;
     private String category;
     private Teacher teacher;
-    private Student[] students;
+    private List<Student> students;
 
     public Course(String name, String category) {
         this.id = nextId++;
         this.name = name;
         this.category = category;
-        this.students = new Student[0];
+        this.students = new ArrayList<>();
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getMaxStudentsPerCourse() {
@@ -54,45 +53,34 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public Student[] getStudents() {
-        return students; //Arrays.copyOf
+    public List<Student> getStudents() {
+        return Collections.unmodifiableList(students);
     }
 
-    public void setStudents(Student[] students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
     public int getStudentCount() {
-        return students.length;
+        return students.size();
     }
 
     public void addStudent(Student student) {
-/*        if (student == null) {
-            System.out.println("Value can't be null. IN COURSE CLASS");
-            return;
+        if (student == null) {
+            throw new IllegalArgumentException("Student cannot be null.");
         }
-        if (getStudentCount() == MAX_STUDENTS_PER_COURSE) {
-            System.out.println("You have maximum student count. IN COURSE CLASS");
-            return;
-        }*/
-        /*for (Student s : students) {
-            if (s.getId() == student.getId()) {
-                return;
-            }
-        }*/
-        Student[] temp = new Student[getStudentCount() + 1];
-        for (int i = 0; i < getStudentCount(); i++) {
-            temp[i] = students[i];
+        if (students.size() >= MAX_STUDENTS_PER_COURSE) {
+            throw new IllegalStateException("Course cannot have more than " + MAX_STUDENTS_PER_COURSE + " students.");
         }
-        temp[getStudentCount()] = student;
-        students = temp;
-        // student.enrollToCourse(this);
-        // System.out.println("Student " + student.getName() + " has been added " + this.getName()+ " course.");
+        if (students.contains(student)) {
+            throw new IllegalArgumentException("Student is already in this course.");
+        }
+        students.add(student);
     }
 
     public int findStudentIndex(int id) {
         for (int i = 0; i < getStudentCount(); i++) {
-            if (students[i].getId() == id) {
+            if (students.get(i).getId() == id) {
                 return i;
             }
         }
@@ -104,28 +92,21 @@ public class Course {
             System.out.println("Not found given index. IN COURSE CLASS");
             return;
         }
-        Student[] temp = new Student[getStudentCount() - 1];
-        int count = 0;
-        for (int i = 0; i < getStudentCount(); i++) {
-            if (i != index) {
-                temp[count++] = students[i];
-            }
-        }
-        students = temp;
+        students.remove(index);
     }
 
     public void printCourseInfo() {
         if (this.getTeacher() != null) {
-            System.out.println("Name: " + name + " Teacher" + teacher.getName() + " Student Count: " + getStudentCount());
+            System.out.println("Name: " + name + " Teacher: " + teacher.getName() + " Student Count: " + getStudentCount());
         } else {
             System.out.println("Name: " + name + " Teacher is null" + " Student Count: " + getStudentCount());
         }
     }
 
-    public String studentArrayNamePrint(Student[] students) {
+    private String studentListNamePrint() {
         StringBuilder sb = new StringBuilder("[");
         for (Student student : students) {
-            sb.append(student.getName() + " ");
+            sb.append(student.getName()).append(" ");
         }
         sb.append("]");
         return sb.toString();
@@ -135,15 +116,13 @@ public class Course {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Course course = (Course) o;
-        return Objects.equals(name, course.getName()) &&
-                Objects.equals(category, course.getCategory());
+        return id == course.id && Objects.equals(name, course.name) && Objects.equals(category, course.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, category);
+        return Objects.hash(id, name, category);
     }
 
     @Override
@@ -153,8 +132,8 @@ public class Course {
                 " | ID: " + id +
                 " | Name: " + name +
                 " | Category: " + category +
-                " | Teacher: " + teacher +
-                " | Students: " + studentArrayNamePrint(students) +
+                " | Teacher: " + (teacher != null ? teacher.getName() : "N/A") +
+                " | Students: " + studentListNamePrint() +
                 " | StudentCount: " + getStudentCount();
     }
 }

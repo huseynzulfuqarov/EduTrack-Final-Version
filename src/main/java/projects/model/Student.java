@@ -1,27 +1,29 @@
 package projects.model;
 
-import projects.interfaces.Notifiable;
-import projects.interfaces.Reportable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
-public class Student extends Person implements Notifiable, Reportable {
+public class Student extends Person {
     private static final int MAX_COURSES_PER_STUDENTS = 5;
-    private Course[] courses;
+    private List<Course> courses;
 
     public Student(String name, String email, int iq) {
         super(name, email, iq);
-        this.courses = new Course[0];
+        this.courses = new ArrayList<>();
     }
 
-    public Course[] getCourses() {
-        return courses; //Arrays.copyOf
+    public List<Course> getCourses() {
+        return Collections.unmodifiableList(courses);
     }
 
-    public void setCourses(Course[] courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 
     public int getCourseCount() {
-        return courses.length;
+        return courses.size();
     }
 
     public int getMaxCoursesPerStudents() {
@@ -29,43 +31,32 @@ public class Student extends Person implements Notifiable, Reportable {
     }
 
     public void enrollToCourse(Course course) {
-/*        if (course == null) {
-            System.out.println("Value can't be null. IN STUDENT CLASS");
-            return;
+        if (course == null) {
+            throw new IllegalArgumentException("Course cannot be null.");
         }
-        if (getCourseCount() == MAX_COURSES_PER_STUDENTS) {
-            System.out.println("You have maximum course count. IN STUDENT CLASS");
-            return;
-        }*/
-      /*  for (Course c : courses) {
-            if (c.equals(course)) {
-                return;
-            }
-        }*/
-        Course[] temp = new Course[getCourseCount() + 1];
-        for (int i = 0; i < getCourseCount(); i++) {
-            temp[i] = courses[i];
+        if (courses.size() >= MAX_COURSES_PER_STUDENTS) {
+            throw new IllegalStateException("Student cannot enroll in more than " + MAX_COURSES_PER_STUDENTS + " courses.");
         }
-        temp[getCourseCount()] = course;
-        courses = temp;
-        // course.addStudent(this);
-        // System.out.println("Student " + getName() + " has been added "+course.getName()+ " course.");
+        if (courses.contains(course)) {
+            throw new IllegalArgumentException("Student is already enrolled in this course.");
+        }
+        courses.add(course);
     }
 
     public void listCourses() {
-        if (getCourseCount() == 0) {
+        if (courses.isEmpty()) {
             System.out.println("There are no courses you can have in the system. IN STUDENT CLASS");
             return;
         }
-        for (int i = 0; i < getCourseCount(); i++) {
-            System.out.println(courses[i].getName());
+        for (Course course : courses) {
+            System.out.println(course.getName());
         }
     }
 
-    public String courseArrayNamePrint(Course[] courses) {
+    private String courseListNamePrint() {
         StringBuilder sb = new StringBuilder("[");
         for (Course course : courses) {
-            sb.append(course.getName() + " ");
+            sb.append(course.getName()).append(" ");
         }
         sb.append("]");
         return sb.toString();
@@ -73,17 +64,17 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public void printInfo() {
-        System.out.println("ID: " + getId() + "Name: " + getName() + "Email: " + getEmail());
+        System.out.println("ID: " + getId() + " Name: " + getName() + " Email: " + getEmail());
     }
 
     @Override
     public String generateReport() {
-        if (getCourseCount() == 0) {
+        if (courses.isEmpty()) {
             return "There are no courses you can have in the system. IN STUDENT CLASS";
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < getCourseCount(); i++) {
-            sb.append(courses[i].getName() + " ");
+        for (Course course : courses) {
+            sb.append(course.getName()).append(" ");
         }
         return sb.toString();
     }
@@ -95,21 +86,23 @@ public class Student extends Person implements Notifiable, Reportable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Student student)) return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        return super.equals(o);
+        Student student = (Student) o;
+        return Objects.equals(courses, student.courses);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(super.hashCode(), courses);
     }
 
     @Override
     public String toString() {
         return "Student ->" + super.toString() +
                 " | MAX_COURSES_PER_STUDENTS: " + MAX_COURSES_PER_STUDENTS +
-                " | Courses: " + courseArrayNamePrint(courses) +
+                " | Courses: " + courseListNamePrint() +
                 " | CourseCount: " + getCourseCount();
     }
 }
